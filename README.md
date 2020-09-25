@@ -17,4 +17,4 @@ Lootbox: 2 experiments in alternative ways to grab loot in game without dockscre
 
 LargeRandomTopology: A simple setup to explore the random topology generator.
 
-SimpleCombatSandbox: Battlespace to test out weapons and armor quickly.
+SimpleCombatSandbox: Battlespace to test out weapons and armor quickly
