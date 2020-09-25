@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+    <!-- Player Ship: Sapphire-class Yacht -->
+    <ShipClass UNID="&ddddPlayershipDebug;"
+               manufacturer=		"Zubrin Systems"
+               class=				"Sapphire"
+               type=				"yacht"
+
+               attributes=			"DDDD_PlayerShip"
+               inherit=			"&scSapphireYacht;"
+               characterClass=		""
+    >
+
+        <!-- Configuration -->
+
+        <Armor
+                armorID=			"&itReactiveArmor;"
+                count=				"4"
+        />
+
+        <Devices>
+            <Device deviceID="&it15MWReactor;"/>
+        </Devices>
+        <Items>
+            <!-- adds the inherited class items if this isn't empty -->
+        </Items>
+        <!-- Player Settings -->
+        <PlayerSettings
+                desc=				"Debug playership."
+                sortOrder=			"10"
+                initialClass=		"true"
+                startingCredits=	"10d100+1500"
+        />
+
+    </ShipClass>
+</TranscendenceModule>

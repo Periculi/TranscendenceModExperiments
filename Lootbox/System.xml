@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<!-- Star System A -->
+	
+	<SystemType UNID="&ddddSysSystemA;">
+
+		<SystemGroup>
+
+            <!-- Sandbox loot drop testing station -->
+
+            <Group>
+                <Station type="&ddddStaEnemyStationA;"/>
+
+                <Siblings radiusInc="20">
+                    <Marker objName="Start"/>
+                </Siblings>
+            </Group>
+
+		</SystemGroup>
+
+	</SystemType>
+
+    <!-- Star System B -->
+
+    <SystemType UNID="&ddddSysSystemB;">
+
+        <SystemGroup>
+
+            <!-- Sandbox loot drop testing station -->
+
+            <Group>
+                <Station type="&ddddStaEnemyStationB;"/>
+
+                <Siblings radiusInc="20">
+                    <Marker objName="Start"/>
+                </Siblings>
+            </Group>
+
+        </SystemGroup>
+
+    </SystemType>
+	
+</TranscendenceModule>

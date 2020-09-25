@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+
+	<!-- Empty System -->
+	
+	<SystemType UNID="&ddddSysEmpty;" noRandomEncounters="true">
+
+		<SystemGroup>
+
+            <!-- The start marker is required because adventure targets this for the (required) playership -->
+            <Marker objName="Start" />
+
+		</SystemGroup>
+
+	</SystemType>
+	
+</TranscendenceModule>

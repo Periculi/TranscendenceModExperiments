@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+	
+	<SystemType UNID="&ddddSysBattlespace;" noRandomEncounters="true">
+
+		<SystemGroup>
+            <Group>
+                <Code>
+                    (trnCreateStarAndZones aOrbit (random (list &stStarClassM8; &stStarClassM5; &stStarClassM0;)) {
+                    metallicComp:	'(20 20 10)
+                    organicComp:	'(10 10 20)
+                    rockyComp:		'(65 50 40)
+                    waterComp:		'( 5 20 30)
+                    })
+                </Code>
+
+                <AddAttribute attributes="redDwarfSystem"/>
+
+                <Orbitals count="1" angle="random" BodeDistanceStart="70" BodeDistanceEnd="90">
+                    <Group>
+                        <Station type="&ddddStaEnemyStation;"/>
+
+                        <Siblings radiusInc="20">
+                            <Marker objName="Start"/>
+                        </Siblings>
+                    </Group>
+                </Orbitals>
+
+            </Group>
+		</SystemGroup>
+
+
+	</SystemType>
+	
+</TranscendenceModule>

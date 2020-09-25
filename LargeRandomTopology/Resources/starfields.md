@@ -1,0 +1,1 @@
+The starfield background for the space map was made using Spacescape and stiching together the skyboxes for a huge image. I don't normally do graphics but this one was easy.

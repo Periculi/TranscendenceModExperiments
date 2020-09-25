@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<!DOCTYPE TranscendenceAdventure
+	[
+    <!--
+
+    A Minimum Viable Adventure Extension. ( as: to load and start- putting the player in "gamespace" )
+
+    -->
+    <!-- Required ENTITIES -->
+	<!ENTITY miniAdventure		     "0xDDDD0001">
+	<!ENTITY miniAdventureDesc       "0xDDDD0002">
+	<!ENTITY miniEmptyMap			 "0xDDDD0003">
+	<!ENTITY miniEmptySystem		 "0xDDDD0004">
+    <!ENTITY miniPlayership          "0xDDDD0005">
+]>
+<!-- this is required -->
+<TranscendenceAdventure
+		UNID=			"&miniAdventure;"
+		apiVersion=		"49"
+		name=			"Minimum Viable"
+		release=		"1"
+		version=		"0.1"
+		credits=		"The Delete Key"
+		>
+    <!-- these are required to support the playership - ship screen, items, resources -->
+    <Library unid="&unidRPGLibrary;" />
+    <Library unid="&unidHumanSpaceLibrary;" />
+
+<!-- this is required -->
+	<AdventureDesc
+			UNID=					"&miniAdventureDesc;"
+			backgroundID=			""
+			
+			startingShipCriteria=	"* +DDDD_PlayerShip;"
+			startingSystem=			"Empty"
+			startingPos=			"Start"
+			>
+		<Language>
+			<Text id="description">
+				(cat
+					"{/rtf It loads and starts. }"
+					)
+			</Text>
+		</Language>
+		
+		<Events>
+
+			<OnGameStart>
+				(block Nil
+                     ;might be more than minviable but whatever
+					(gamSetCrawlText (cat
+						"Minimum Viable Adventure Extension/n/nUsing 2 libraries this adventure extension only requires 5 entities defined to start the game."
+						))
+					)
+			</OnGameStart>
+
+
+		</Events>
+	</AdventureDesc>
+
+	<!-- Here, we define all of the resources used in this mod. -->
+    <!-- Modules should be used as the library references seem to not exist in the TranscendenceAdventure struct -->
+    <!-- SystemMap could be here in this file as it is in other Adventure Extensions -->
+	<Module filename="SystemMap.xml" />
+	<Module filename="System.xml" />
+    <Module filename="Playership.xml" />
+
+</TranscendenceAdventure>

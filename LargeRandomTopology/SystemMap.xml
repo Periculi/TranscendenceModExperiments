@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<!-- Tranquility Universe -->
+    <!--debugShowAttributes="true" shows on galaxy map what attributes get assigned -->
+	<SystemMap UNID="&ddddMapVLRN;"
+			name=				"Experiment Space"
+			backgroundImage=	"&ddddResBigSpaceMap;"
+			initialScale=		"100"
+			minScale=			"30"
+			maxScale=			"125"
+            lightYearsPerPixel= "25"
+
+			>
+
+
+		<TopologyCreator>
+            <Stargate from="Start" to="Experiment" />
+            <Stargate from="Coreward" to="Experiment" />
+        </TopologyCreator>
+
+		<Node ID="Start" x="-2400" y="-2400">
+			<System UNID=		"&ddddSysEmpty;"
+					name=		"Start"
+					level=		"1"
+					attributes=	"emptySpace"
+					/>
+		</Node>
+        <!--
+
+        Anything over 550-600 in count makes a very large network
+        Have made it fit nicely with the oversize background now - 8192x8192
+        850-900 averages around 120+ jumps start to coreward (diagonal, bottom left to top right), with an immense network
+        try (sysGetTopologyDistance "Start" "Coreward") I think in console
+        Network type "path" seems to work out best for generating labyrinthine networks
+
+        networkType= path | tree | web
+        -->
+        <Random id="Experiment"
+                networkType=	"path"
+                count=			"850-900"
+                minSeparation=	"60"
+                initialState="known"
+        >
+            <NodeTemplate
+                    attributes="experimentSpace"
+
+            />
+            <!-- a sort of squarish set of circles apx 7000px on a side, staying in the background bounds a bit looks better -->
+            <Area>
+                <Line from="0, 0"	to="0, 0" radius="2000"	/>
+                <Line from="1500,1500" to="1500, 1500" radius="2000" />
+                <Line from="-1500,1500" to="-1500, 1500" radius="2000" />
+                <Line from="1500,-1500" to="1500, -1500" radius="2000" />
+                <Line from="-1500,-1500" to="-1500, -1500" radius="2000" />
+            </Area>
+        </Random>
+
+        <Node ID="Coreward" x="3000" y="3000" initialState="known">
+            <System UNID=		"&ssEarthSpacePrimordial;"
+                    name=		"Coreward"
+                    level=		"1"
+                    attributes=	"emptySpace"
+
+            />
+        </Node>
+
+
+        <TopologyProcessor criteria="+systemType:0;">
+
+            <Group criteria="+experimentSpace;">
+                <System>
+                    <Table>
+                        <System chance="25" UNID="&ssEarthSpacePrimordial;"/>
+                        <System chance="25" UNID="&ssEarthSpaceNebulae;"/>
+                        <System chance="25" UNID="&ssEarthSpaceMetallic;"/>
+                        <System chance="25" UNID="&ssEarthSpaceVolcanicAsteroids;"/>
+                    </Table>
+                </System>
+            </Group>
+
+            <!-- Experimental distance from start processing -->
+            <FillNodes>
+                <System>
+                    <NodeDistanceTable distanceTo="+nodeID:Start;">
+                        <System distance="1-5" name="A" attributes="coreSystem" />
+                        <System distance="6-8"	name="B" attributes="developedSystem" />
+                        <System	distance="9-12" name="C" attributes="industrialSystem" />
+                        <System	distance="13-14" name="D" attributes="frontierSystem" />
+                        <System	distance="15-25" name="E" attributes="surveyedSystem" />
+                        <System	distance="26-35" name="F" attributes="unknownSystem" />
+                        <System	name="G" attributes="hereBeDragons" />
+                    </NodeDistanceTable>
+                </System>
+            </FillNodes>
+        </TopologyProcessor>
+
+	</SystemMap>
+
+    <Image UNID="&ddddResBigSpaceMap;"    bitmap="Resources\tiled-starfields-layers.jpg"	loadOnUse="true"/>
+
+</TranscendenceModule>

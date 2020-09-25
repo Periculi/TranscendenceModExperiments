@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<!DOCTYPE TranscendenceAdventure
+	[
+    <!--
+
+    2 different approaches to having loot drop into space instead of dockscreen on wrecks
+
+    -->
+    <!-- LOOTBOX ENTITIES -->
+
+    <!-- the adventure extension DDDD FFsx, DDDD FFsx s= series x=number|chapter -->
+	<!ENTITY ddddAdvLootbox		 "0xDDDDFFF0">
+	<!ENTITY ddddAdvLootboxDesc    "0xDDDDFF1">
+
+    <!-- sovereigns DDDD FExx -->
+    <!-- ddddSov[name] -->
+    <!ENTITY ddddSovFriendly "0xDDDDFE01">
+    <!ENTITY ddddSovEnemyAI "0xDDDDFE02">
+
+	<!-- star systems and map DDDD 0xxx -->
+	<!-- there is only one system map typically, so it can be 0 -->
+	<!ENTITY ddddMapLootbox			 "0xDDDD0000">
+
+    <!-- ddddSys[name|code|environment] -->
+	<!ENTITY ddddSysSystemA			 "0xDDDD0001">
+    <!ENTITY ddddSysSystemB			 "0xDDDD0002">
+
+    <!-- star system objects 0xDDDD1xxx -->
+    <!-- ddddSysObj[name|code] -->
+
+    <!-- station types DDDD 2xxx -->
+    <!-- ddddSta[sovcode][model] -->
+	<!ENTITY ddddStaEnemyStationA "0xDDDD2001">
+    <!ENTITY ddddStaEnemyStationB "0xDDDD2002">
+    <!-- lootbox station -->
+    <!ENTITY ddddStaLootboxA "0xDDDD2003">
+
+		
+	<!-- ship classes DDDD 3xxx [4,5]-->
+    <!-- ddddShip[sovcode][model] and ddddPlayership[model] -->
+    <!ENTITY ddddPlayershipA  "0xDDDD3001">
+    <!ENTITY ddddShipCorsairA "0xDDDD3002">
+    <!ENTITY ddddShipVikingA "0xDDDD3003">
+
+    <!-- alternate lootbox set -->
+    <!ENTITY ddddPlayershipB  "0xDDDD3004">
+    <!ENTITY ddddShipCorsairB "0xDDDD3005">
+    <!ENTITY ddddShipVikingB "0xDDDD3006">
+
+    <!-- special item types (virtuals) DDDD 6xxx -->
+    <!ENTITY ddddItmVtLootboxB  "0xDDDD6001" />
+    <!-- items DDDD 7xxx [8,9]-->
+
+	
+	<!-- random tables (items, encounters) DDDD Cxxx -->
+	
+	<!-- effects, energy fields, space env, etc DDDD Exxx-->
+	
+	<!-- dock screens DDDD Dxxx-->
+	
+	<!-- powers DDDD Bxxx -->
+	
+	<!-- image and sound resources DDDD Axxx -->
+
+
+]>
+
+<TranscendenceAdventure
+		UNID=			"&ddddAdvLootbox;"
+		apiVersion=		"49"
+		name=			"2 Alternate Loot Drop Methods"
+		release=		"1"
+		version=		"0.1"
+		credits=		"Periculi"
+		>
+
+    <Library unid="&unidRPGLibrary;" />
+    <Library unid="&unidHumanSpaceLibrary;" />
+
+	<AdventureDesc
+			UNID=					"&ddddAdvLootboxDesc;"
+			backgroundID=			""
+			
+			startingShipCriteria=	"* +DDDD_PlayerShip;"
+			startingSystem=			"SystemA"
+			startingPos=			"Start"
+			>
+		<Language>
+			<Text id="description">
+				(cat
+					"{/rtf Example of 2 methods to pick up loot without dockscreens. }"
+					)
+			</Text>
+		</Language>
+		
+		<Events>
+
+			<OnGameStart>
+				(block Nil
+					(gamSetCrawlText (cat
+						"This example demonstrates two different approaches to having the playership capable of flying over lootbox items to get the contents."
+                        "\n\nPlayership A uses OnUpdate to scan for lootbox items.\n\nPlayership B the lootbox items are weapon fire that use OnDamage events to detect the playership."
+                        "\n\nThe player enters the game close to an enemy station with some weak enemies to destroy who will drop lootboxes and make no wrecks."
+						))
+					)
+			</OnGameStart>
+
+
+		</Events>
+	</AdventureDesc>
+
+	<!-- Here, we define all of the resources used in this mod. -->
+
+
+	<Module filename="SystemMap.xml" />
+	<Module filename="System.txml" />
+    <Module filename="Playership.xml" />
+    <Module filename="Enemies.xml" />
+
+</TranscendenceAdventure>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<!-- A single system map. -->
+
+	<SystemMap UNID="&miniEmptyMap;"
+			name=				"Space" 
+			backgroundImage=	""
+			initialScale=		"100"
+			minScale=			"50"
+			maxScale=			"100"
+			>
+
+		<!-- this is required to exist -->
+		<TopologyCreator>
+			<Stargate from="Empty:Outbound" to="Empty:Inbound"/> <!-- loopy, but it works, besides THERE IS NO SPOON.. nor stargate in the empty system -->
+		</TopologyCreator>
+        <!-- need at least one node -->
+		<Node ID="Empty" x="0" y="0">
+			<System UNID=		"&miniEmptySystem;"
+					name=		"Space"
+					level=		"1"
+					attributes=	"emptySpace"
+					/>
+		</Node>
+
+	</SystemMap>
+
+</TranscendenceModule>

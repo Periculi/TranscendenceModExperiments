@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+    <!-- Player Ship: Sapphire-class Yacht -->
+    <!-- a playership is required to start a game, this one is inheriting from a library ship class to make it easy -->
+    <ShipClass UNID="&miniPlayership;"
+               manufacturer=		"Zubrin Systems"
+               class=				"Sapphire"
+               type=				"yacht"
+
+               attributes=			"DDDD_PlayerShip"
+               inherit=			"&scSapphireYacht;"
+               characterClass=		""
+    >
+
+        <!-- Configuration -->
+        <!-- must have armor, sourced from library -->
+        <Armor
+                armorID=			"&itReactiveArmor;"
+                count=				"4"
+        />
+        <!-- must have a reactor, sourced from library -->
+        <Devices>
+            <Device deviceID="&it15MWReactor;"/>
+        </Devices>
+        <Items>
+            <!-- adds the inherited class items if this isn't empty -->
+        </Items>
+        <!-- Player Settings -->
+        <PlayerSettings
+                desc=				"Generic stripped down playership."
+                sortOrder=			"10"
+                initialClass=		"true"
+                startingCredits=	"10d100+1500"
+        />
+
+    </ShipClass>
+</TranscendenceModule>

@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<!DOCTYPE TranscendenceAdventure
+	[
+            <!--
+
+            Simple Combat Sandbox "Battlespace"
+            I used this for testing upper limits on damage and damage type interactions at different levels.
+            Quick Player vs. Enemy with set of weapon and armor to test out.
+
+            Lootbox as weaponfire mechanic included because I enjoy picking up loot even when I'm just testing weapons on unsuspecting pirates.
+
+            Playerships.xml has the experiment items in it to adjust damage type / range and whatever.
+
+            -->
+        <!ENTITY ddddAdvBattlespace "0xDDDD0000">
+        <!ENTITY ddddAdvBattlespaceDesc "0xDDDD0001">
+
+        <!ENTITY ddddSovEnemyAI "0xDDDD0002">
+
+        <!ENTITY ddddMapBattlespace "0xDDDD0003">
+        <!ENTITY ddddSysBattlespace "0xDDDD0004">
+
+        <!ENTITY ddddStaEnemyStation "0xDDDD0005">
+
+        <!ENTITY ddddPlayershipDebug "0xDDDD0006">
+
+        <!ENTITY ddddShipCorsair "0xDDDD0007">
+        <!ENTITY ddddItmVtLootboxB "0xDDDD0008">
+
+        <!ENTITY ddddExperimentWeapon "0xDDDD0009">
+        <!ENTITY ddddExperimentArmor "0xDDDD000A">
+
+]>
+
+<TranscendenceAdventure
+		UNID=			"&ddddAdvBattlespace;"
+		apiVersion=		"49"
+		name=			"Simple Combat Sandbox"
+		release=		"1"
+		version=		"0.1"
+		credits=		"Periculi"
+		>
+    <!-- these are required to support the playership - ship screen, items, resources -->
+    <Library unid="&unidRPGLibrary;" />
+    <Library unid="&unidHumanSpaceLibrary;" />
+
+
+	<AdventureDesc
+			UNID=					"&ddddAdvBattlespaceDesc;"
+			backgroundID=			""
+			
+			startingShipCriteria=	"* +DDDD_PlayerShip;"
+			startingSystem=			"Battlespace"
+			startingPos=			"Start"
+			>
+		<Language>
+			<Text id="description">
+				(cat
+					"{/rtf Simple combat sandbox for testing out weapons, armor, etc. }"
+					)
+			</Text>
+		</Language>
+		
+		<Events>
+
+			<OnGameStart>
+				(block Nil
+					(gamSetCrawlText (cat
+						"Simple Combat Sandbox\n\nPlayership and some enemies in an empty battle space to allow quick testing in combat."
+						))
+					)
+			</OnGameStart>
+
+
+		</Events>
+	</AdventureDesc>
+
+	<!-- Here, we define all of the resources used in this mod. -->
+    <!-- Modules should be used as the library references seem to not exist in the TranscendenceAdventure struct -->
+    <!-- SystemMap could be here in this file as it is in other Adventure Extensions -->
+	<Module filename="SystemMap.xml" />
+	<Module filename="Battlespace.xml" />
+    <Module filename="Playerships.xml" />
+    <Module filename="Enemies.xml" />
+
+</TranscendenceAdventure>

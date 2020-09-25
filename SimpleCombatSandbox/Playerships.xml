@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+    <!-- Player Ship: Sapphire-class Yacht -->
+    <!-- a playership is required to start a game, this one is inheriting from a library ship class to make it easy -->
+    <ShipClass UNID="&ddddPlayershipDebug;"
+               manufacturer=		"Zubrin Systems"
+               class=				"Sapphire"
+               type=				"yacht"
+
+               attributes=			"DDDD_PlayerShip"
+               inherit=			"&scSapphireYacht;"
+               characterClass=		""
+    >
+
+        <!-- Configuration -->
+        <!-- must have armor, sourced from library -->
+        <Armor
+                armorID=			"&ddddExperimentArmor;"
+                count=				"4"
+        />
+        <!-- must have a reactor, sourced from library -->
+        <Devices>
+            <Device deviceID="&ddddExperimentWeapon;"/>
+            <Device deviceID="&it15MWReactor;"/>
+        </Devices>
+        <Items>
+            <!-- adds the inherited class items if this isn't empty -->
+        </Items>
+        <!-- Player Settings -->
+        <PlayerSettings
+                desc=				"Adventure debug ship."
+                sortOrder=			"10"
+                initialClass=		"true"
+                startingCredits=	"10d100+1500"
+        />
+
+    </ShipClass>
+    <ItemType UNID="&ddddExperimentWeapon;"
+              name=				"experiment weapon"
+              attributes=			"commonwealth, EI, energyWeapon, majorItem"
+
+              level=				"1"
+              frequency=			"common"
+
+              value=				"380"
+              mass=				"1000"
+
+              description=		"Playing around with the game engine."
+    >
+
+        <Image imageID="&rsItemsEI1;" imageX="96" imageY="0" imageWidth="96" imageHeight="96"/>
+        <!-- there is damage scaling by type internally -->
+        <Weapon
+                type=				"beam"
+
+                damage=				"darkfire:10000"
+                fireRate=			"180"
+                range=				"60"
+                powerUse=			"10"
+
+                effect=				"&efLaserBeamDefault;"
+                sound=				"&snLaserCannon;"
+        >
+        </Weapon>
+    </ItemType>
+    <ItemType UNID="&ddddExperimentArmor;"
+              name=				"experiment armor"
+              attributes=			"armor"
+
+              level=				"1"
+              frequency=			"uncommon"
+              numberAppearing=	"1d4"
+
+              value=				"75"
+              mass=				"2000"
+
+              description=		"Playing around with the game engine"
+    >
+
+        <Image imageID="&rsItems1;" imageX="192" imageY="672" imageWidth="96" imageHeight="96"/>
+
+        <Armor
+                hitPoints=	"100000000"
+
+        />
+    </ItemType>
+</TranscendenceModule>

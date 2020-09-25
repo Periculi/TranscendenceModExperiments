@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+    <!-- Player Ship: Sapphire-class Yacht -->
+
+    <ShipClass UNID="&ddddPlayershipA;"
+               manufacturer=		"Zubrin Systems"
+               class=				"Sapphire"
+               type=				"yacht"
+
+               attributes=			"DDDD_PlayerShip"
+               inherit=			"&scSapphireYacht;"
+               characterClass=		""
+    >
+
+        <!-- Configuration -->
+
+        <Armor
+                armorID=			"&itCeralloyArmor;"
+                count=				"4"
+        />
+        <!-- Stronger than the pirates because we want to look at what happens when they drop loot. -->
+        <Devices>
+            <Device deviceID="&itAkan30Cannon;">
+                <Items>
+                    <Item count="300" item="&itAkan30CannonShell;"/>
+                </Items>
+            </Device>
+            <Device deviceID="&itIonCannon;"/>
+            <Device deviceID="&itNephrenP25;"/>
+
+            <Device deviceID="&itRasiermesserEnhancer;"/>
+            <Device deviceID="&it100MWReactor;"/>
+        </Devices>
+        <Items>
+            <!-- adds the inherited class items if this isn't empty -->
+            <!-- the shells we need, anything else should show up from the lootbox mechanic -->
+        </Items>
+        <!-- Player Settings -->
+
+        <PlayerSettings
+                desc=				"Playership A - OnUpdate method"
+                sortOrder=			"10"
+                initialClass=		"true"
+                startingCredits=	"10d100+1500"
+
+                startingSystem=		"SystemA"
+                startingPos=		"Start"
+        />
+        <Events>
+            <OnUpdate>
+            (block (
+                     (massTaken 0)
+                     (cargoFull Nil)
+                     (srcPos		(objGetPos gSource))
+                     (srcVel		(objGetVel gSource))
+                    )
+                ; This method is a little sluggish, but workable.
+
+                ;scan for any lootboxes near the playership and iterate through them
+                (enum (sysFindObject gSource "t N:3 S:d +lootBox;") lootBox
+                  (block (lootList cargoLeft totalMass itList itTaken fullCount takeCount thisPos)
+                    (objSendMessage gSource Nil "loot box detected")
+                    (setq lootList (objGetItems lootBox "*U"))
+                    (setq itList Nil)
+                    (setq itTaken 0)
+                    ; got the loot list from the loot box, now iterate those items-
+                    ; borrowed this from PM code-
+                    (enum lootList thisItem
+                      (block	(	(fullCount	(itmGetCount thisItem))
+                                    (thisMass	(itmGetMass thisItem))
+                                    (totalMass	(multiply fullCount thisMass))
+                                    (cargoLeft	(objGetCargoSpaceLeft gSource))
+                                 )
+                        ;figure out if we have enough room to take the item(s)
+                        ; Set number to take.
+                        ; seems like a great example for a global here-
+                        (setq takeCount
+                          (if (leq totalMass cargoLeft)
+                            ;everything will fit
+                            fullCount
+
+                            ;we might get some of it
+                            (block Nil
+                              (setq cargoFull True)
+                              (min fullCount (divide cargoLeft thisMass) )
+                            )
+                          )
+                        )
+
+                        ; Take the items, and compose new item list.
+                        (if (geq takeCount 1) (block Nil
+                          ; Take item from the source.
+                          (objRemoveItem lootBox thisItem takeCount)
+                          (objAddItem gSource thisItem takeCount)
+
+                          ;Advance counters.
+                          (setq itTaken (add itTaken 1))
+
+                          ; Construct list of items taken.
+                          (setq itList (lnkAppend itList (itmSetCount thisItem takeCount)) )
+                        ))
+                        ;end item iteration
+                      )
+                    )
+                    ;destroy the lootbox station if it is empty
+                    (if (not (objGetItems lootBox "*U"))
+                      ; it is empty
+                      (block Nil
+
+                        (objDestroy lootBox)
+                      )
+                      ;there is something left so we don't destroy it yet.
+                    )
+                  ;end lootBox iteration
+                  )
+                )
+                ;end event
+            )
+            </OnUpdate>
+        </Events>
+
+    </ShipClass>
+    <!-- PlayerShip B - lootbox weapon fire mechanic -->
+    <ShipClass UNID="&ddddPlayershipB;"
+               manufacturer=		"Zubrin Systems"
+               class=				"Sapphire"
+               type=				"yacht"
+
+               attributes=			"DDDD_PlayerShip"
+               inherit=			"&scSapphireYacht;"
+               characterClass=		""
+    >
+
+        <!-- Configuration -->
+
+        <Armor
+                armorID=			"&itCeralloyArmor;"
+                count=				"4"
+        />
+        <!-- Stronger than the pirates because we want to look at what happens when they drop loot. -->
+        <Devices>
+            <Device deviceID="&itAkan30Cannon;">
+                <Items>
+                    <Item count="300" item="&itAkan30CannonShell;"/>
+                </Items>
+            </Device>
+            <Device deviceID="&itIonCannon;"/>
+            <Device deviceID="&itNephrenP25;"/>
+
+            <Device deviceID="&itRasiermesserEnhancer;"/>
+            <Device deviceID="&it100MWReactor;"/>
+        </Devices>
+        <Items>
+            <!-- adds the inherited class items if this isn't empty -->
+        </Items>
+        <!-- Player Settings -->
+
+        <PlayerSettings
+                desc=				"Playership B - weapon fire method"
+                sortOrder=			"10"
+                initialClass=		"true"
+                startingCredits=	"10d100+1500"
+
+                startingSystem=		"SystemB"
+                startingPos=		"Start"
+        />
+        <!-- no new events in this model -->
+
+    </ShipClass>
+</TranscendenceModule>

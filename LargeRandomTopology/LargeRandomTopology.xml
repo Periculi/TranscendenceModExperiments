@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<!DOCTYPE TranscendenceAdventure
+        [
+        <!--
+
+           Very Large Random Network Experiments
+
+        -->
+        <!-- VLRN ENTITIES -->
+        <!ENTITY ddddAdvTopology  "0xDDDD0000">
+        <!ENTITY ddddAdvTopologyDesc "0xDDDD0001">
+        <!ENTITY ddddMapVLRN "0xDDDD0002">
+        <!ENTITY ddddSysEmpty "0xDDDD0003">
+        <!ENTITY ddddPlayershipDebug "0xDDDD0004">
+        <!ENTITY ddddResBigSpaceMap "0xDDDD0005" >
+        ]>
+<!-- this is required -->
+<TranscendenceAdventure
+		UNID=			"&ddddAdvTopology;"
+		apiVersion=		"49"
+		name=			"Very Large Random Network Experiments"
+		release=		"1"
+		version=		"0.1"
+		credits=		"Periculi"
+		>
+
+    <Library unid="&unidRPGLibrary;" />
+    <Library unid="&unidHumanSpaceLibrary;" />
+
+	<AdventureDesc
+			UNID=					"&ddddAdvTopologyDesc;"
+			backgroundID=			""
+			
+			startingShipCriteria=	"* +DDDD_PlayerShip;"
+			startingSystem=			"Start"
+			startingPos=			"Start"
+			>
+		<Language>
+			<Text id="description">
+				(cat
+					"{/rtf Just making a gigantic network using random options in topology. }"
+					)
+			</Text>
+		</Language>
+		
+		<Events>
+
+			<OnGameStart>
+				(block Nil
+					(gamSetCrawlText (cat
+						"Very Large Random Network\nA simple setup to explore the random topology generation on any scale but very large was my first stop."
+						))
+					)
+			</OnGameStart>
+
+
+		</Events>
+	</AdventureDesc>
+
+	<Module filename="SystemMap.xml" />
+	<Module filename="System.xml" />
+    <Module filename="Playership.xml" />
+
+</TranscendenceAdventure>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+    <Sovereign UNID="&ddddSovEnemyAI;"
+               name="Hostile AI"
+               shortName=": Hostile AIs"
+               adjective="AI"
+               demonym=":a hostile AI(s)"
+               plural="true"
+
+               alignment="destructive order"
+    />
+    <StationType UNID="&ddddStaEnemyStation;"
+                 name=				"Enemy Station"
+                 sovereign=			"&ddddSovEnemyAI;"
+                 abandonedScreen=	"&dsRPGAbandonedStation;"
+                 dockingPorts=		"8"
+
+                 armorID=			"&ddddExperimentArmor;"
+                 hitPoints=			"1000000"
+                 regen=				"1"
+                 fireRateAdj=		"80"
+                 explosionType=		"&vtKineticExplosion1;"
+                 ejectaType=			"&vtWreckEjecta;"
+
+                 attributes=			"hostileAI enemyStation sandboxSpace"
+    >
+
+        <!-- Encounter Info -->
+
+        <Encounter
+                systemCriteria=			"+sandboxSpace;"
+                systemAffinity=			"*"
+                levelFrequency=			"cuv-- ----- ----- ----- -----"
+
+                locationCriteria=		"+asteroids"
+                enemyExclusionRadius=	"50"
+        />
+
+        <Image			imageID="&rsStations1;" imageX="0" imageY="512" imageWidth="156" imageHeight="156"/>
+
+        <Devices>
+           <!-- <Device deviceID="&itLaserCannon;"	omnidirectional="true"/> -->
+        </Devices>
+
+        <Ships>
+            <Table>
+                <Ship chance="85"	count="1"	class="&ddddShipCorsair;"		orders="guard"/>
+                <Ship chance="15"	count="1"	class="&ddddShipCorsair;"		orders="guard"/>
+            </Table>
+        </Ships>
+
+
+        <Items>
+            <Lookup chance="50" table="&trStdLevelTreasure;"/>
+        </Items>
+
+
+        <Encounters frequency="common">
+            <Table>
+                <Ship chance="5" count="1"		class="&ddddShipCorsair;" eventHandler="&evStdPatrolEncounterBehavior;">
+                    <Escorts>
+                        <Ship count="1" class="&ddddShipCorsair;" orders="escort"/>
+                    </Escorts>
+                </Ship>
+                <Ship chance="95" count="1"		class="&ddddShipCorsair;" eventHandler="&evStdPatrolEncounterBehavior;">
+
+                </Ship>
+            </Table>
+        </Encounters>
+    </StationType>
+
+    <!-- Level 1: Corsair-class Gunship -->
+
+    <ShipClass UNID="&ddddShipCorsair;"
+               manufacturer=		"Neptune's Forge"
+               class=				"Corsair"
+               type=				"gunship"
+               defaultSovereign=	"&ddddSovEnemyAI;"
+
+               size=				"26"
+               mass=				"25"
+               cargoSpace=			"5"
+               thrustRatio=		"10"
+               maxSpeed=			"25"
+
+               attributes=			"hostileAI enemyShip swarm"
+               leavesWreck="0"
+    >
+
+        <Armor>
+            <ArmorSection start="270" span="180" armorID="&ddddExperimentArmor;"/>
+            <ArmorSection start="90"  span="180" armorID="&ddddExperimentArmor;"/>
+        </Armor>
+
+        <Devices>
+            <Device deviceID="&ddddExperimentWeapon;"/>
+        </Devices>
+        <Items>
+            <Lookup chance="50" table="&trStdLevelTreasure;"/>
+        </Items>
+        <Maneuver
+                maxRotationRate=	"9.0"
+                rotationAccel=		"2.0"
+        />
+
+        <Image imageID="&rsCorsairHD;" imageWidth="52" imageHeight="52" rotationCount="120" rotationColumns="12" viewportRatio="0.00375" rotationOffset="-10" />
+        <HeroImage imageID="&rsCorsairHero;" imageWidth="320" imageHeight="320"/>
+
+        <Effects>
+            <Effect type="thrustMain"		posAngle="144"	posRadius="10"	posZ="0"	rotation="180"/>
+            <Effect type="thrustMain"		posAngle="-144"	posRadius="10"	posZ="0"	rotation="180"/>
+        </Effects>
+
+        <AISettings
+                fireRateAdj=		"8"
+                fireRangeAdj=		"99"
+                fireAccuracy=		"75"
+                perception=			"10"
+                noFriendlyFire=     "true"
+                combatStyle=		"chase"
+                aggressor=			"true"
+
+        />
+        <Events>
+            <OnDestroy>
+                (block Nil
+                  ; if there are items make a lootbox
+                  (if (geq (count (objGetItems gSource "*U")) 1)
+                    (block nil
+                      ; create a lootbox weapon item
+                      (setq lootbox (sysCreateWeaponFire &ddddItmVtLootboxB; Nil (objGetPos gSource) (sysVectorAngle (objGetPos gSource)) 1 gPlayerShip))
+                      ; store the item list on the lootbox
+                      (objSetData lootbox 'loot (objGetItems gSource "*U"))
+                    )
+                  )
+
+                )
+            </OnDestroy>
+        </Events>
+
+    </ShipClass>
+
+
+    <!-- lootbox mechanic B lootbox vt weapon -->
+    <ItemType UNID="&ddddItmVtLootboxB;"
+              name=		"(lootbox B)"
+              virtual=	"true"
+    >
+        ; Based on functionality found in PMs StarCastleArcade powerups:
+
+        ; Need at least one damage for collision to call OnDamageArmor event.
+        ; However, Story Mode slashes damage down to a tenth, so we need at least ten damage
+        ; to guarantee that one point of damage to proc OnDamageArmor.
+        <Weapon
+                type=		"missile"
+                damage=		"generic:10"
+                missileSpeed=	"2"
+                lifetime=	"5000"
+                hitPoints=	"1000"
+                interaction=	"0"
+                maneuverRate=	"180"
+                passthrough=  "true"
+
+        >
+            <Effect>
+
+                <Image  imageID="&rsGenericCargoCrate;" imageX="0" imageY="0" imageWidth="32" imageHeight="32" />
+
+            </Effect>
+
+        </Weapon>
+
+        <Events>
+            <OnCreateShot>
+
+            </OnCreateShot>
+            <OnDamageArmor>
+                (block Nil
+                  (lootEventDamageTriggered aCause gSource)
+                  ;return 0
+                  0
+                )
+            </OnDamageArmor>
+
+            <OnDamageShields>
+                (block Nil
+                  (lootEventDamageTriggered aCause gSource)
+                  ;return 0 - seems this also suppresses the shield hit effect, looks better without it
+                  0
+                )
+            </OnDamageShields>
+
+            <OnDamageOverlay>
+                ; Ignore overlays because we want to grab the goodies!
+                aDamageHP
+            </OnDamageOverlay>
+
+        </Events>
+    </ItemType>
+    <Globals>
+        (block Nil
+          ;lootEventDamageTriggered: places loot in player cargo when lootbox is flown over if there is room for it
+          ;lootbox item is a weapon which triggers this function in OnDamageArmor and OnDamageShields
+          ; aCause is the weapon
+          ; gSource is what it is hitting - we are just detecting playership or not
+          (setq lootEventDamageTriggered (lambda (aCause gSource)
+            (block Nil
+              ;check if gSource is the playership
+              (if (eq gSource gPlayerShip)
+                ;its the player so try to give some loot
+                (block Nil
+                  ; storage for leftover items
+                  (setq leftoverItems Nil)
+                  ; pull the lovely custom data handle, which is in this case an item list
+                  ; iterate this item list
+                  (enum (objGetData aCause 'loot) thisItem
+                    (block (	(fullCount	(itmGetCount thisItem))
+                                (thisMass	(itmGetMass thisItem))
+                                (totalMass	(multiply fullCount thisMass))
+                                (cargoLeft	(objGetCargoSpaceLeft gSource))
+                            )
+
+                      ;figure out if we have enough room to take the item(s)
+                      ; Set number to take.
+                      (setq takeCount
+                        (if (leq totalMass cargoLeft)
+                          ; YES:  All
+                          fullCount
+
+                          ; NO:  Much as can fit.
+                          (block Nil
+                            (setq cargoFull True)
+                            (min fullCount (divide cargoLeft thisMass) )
+                          )
+                        )
+                      )
+
+                      (if (eq takeCount fullCount)
+                        ; Yes, everything fits nicely
+                        (block Nil
+                          ;(dbgOutput "Playership had cargo room")
+                          (objAddItem gPlayerShip thisItem (itmGetCount thisItem))
+                        )
+                        ; No, houston we have a problem
+                        (block Nil
+                          ; can't fit the items and the lootbox will be destroyed after this event
+                          ; need to add the item at count to the leftoverItems list
+                          ; then attach that to a new lootbox
+                          ;(dbgOutput "Playership doesnt have room for everything")
+                          (if (geq takeCount 1)
+                            ; yes, some items fit on playership
+                            (block Nil
+                              ;(dbgOutput "Playership did have room for some")
+                              (objAddItem gPlayerShip thisItem takeCount)
+                              ; add the remainder to the leftovers
+                              (setq leftoverItems (lnkAppend leftoverItems (itmSetCount thisItem (min fullCount takeCount))))
+                            )
+                            ; no, ship is stuffed boss
+                            (block Nil
+                              ;(dbgOutput "Playership got nothing")
+                              (setq leftoverItems (lnkAppend leftoverItems (itmSetCount thisItem fullCount)))
+                            )
+                          )
+                        )
+                      )
+
+                      ;all done with the item
+                    )
+
+                  )
+                  ; all done with the item list
+
+                  ;if we have leftovers make a new lootbox
+                  ; probably message the player like: yo your cargo full no loot for you
+                  (if (geq (count leftoverItems) 1)
+                    (block Nil
+                      ;(dbgOutput "cargo is full, creating new lootbox")
+                      (plyMessage gPlayer "No room for more loot!")
+                      (setq lootbox (sysCreateWeaponFire &ddddItmVtLootboxB; Nil (sysVectorRandom gSource 2 1) (sysVectorAngle (objGetPos gSource)) 1 gPlayerShip))
+                      (objSetData lootbox 'loot leftoverItems)
+                    )
+                  )
+                )
+                ; Not the playership
+                ; so its someone we don't want this loot to go to and we can "bounce" the weapon to preserve it's loot
+                ; which actually just means create a new weapon fire object and transfer loot as this one is about to disappear
+                ; someday maybe if gSource has some kind of "steals loot" property it gets taken no matter what we want
+                (block nil
+                  ;(dbgOutput "enemy contact, bouncing")
+                  (setq newLootbox (sysCreateWeaponFire &ddddItmVtLootboxB; Nil (sysVectorRandom gSource 2 1) (sysVectorAngle (objGetPos gSource)) 1 gPlayerShip))
+                  (objSetData newLootbox 'loot (objGetData aCause 'loot))
+                )
+              )
+            )
+            )
+          )
+          ;end lootEventDamageTriggered
+        )
+    </Globals>
+</TranscendenceModule>

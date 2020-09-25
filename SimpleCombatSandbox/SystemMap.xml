@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<!-- Swarm Map 8192x8192 -->
+    <!--debugShowAttributes="true"-->
+	<SystemMap UNID="&ddddMapBattlespace;"
+			name=				"Battle Space"
+			backgroundImage=	""
+			initialScale=		"100"
+			minScale=			"30"
+			maxScale=			"125"
+            lightYearsPerPixel= "25"
+
+			>
+
+
+        <TopologyCreator>
+            <Stargate from="Battlespace:Inbound" to="Battlespace:Outbound" />
+        </TopologyCreator>
+
+		<Node ID="Battlespace" x="-2400" y="-2400">
+			<System UNID=		"&ddddSysBattlespace;"
+					name=		"Battle Space"
+					level=		"1"
+					attributes=	"battleSpace"
+					/>
+		</Node>
+
+
+	</SystemMap>
+
+</TranscendenceModule>
+ 
