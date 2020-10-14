@@ -15,3 +15,5 @@ Lootbox: 2 experiments in alternative ways to grab loot in game without dockscre
 LargeRandomTopology: A simple setup to explore the random topology generator.
 
 SimpleCombatSandbox: Battlespace to test out weapons and armor quickly.
+
+Planet Interaction Prototype: A basic system with a couple of planets to play around with adding dockscreens with graphics for planet orbit and surface.
