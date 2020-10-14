@@ -7,9 +7,6 @@ To install an experiment just copy one of the folders in this package into your 
 
 The UNIDs are *not unique* across each experiment, they are not meant to install all together. Mostly just for reference and perhaps a starting point for your own experiments.
 
-# Usage
-
-While this package is intended for demonstration you can make use of the code in your own mods freely.
 # Packages:
 MinViable : A minimum viable adventure extension stripped down to just what is needed to get player into "gamespace"
 
