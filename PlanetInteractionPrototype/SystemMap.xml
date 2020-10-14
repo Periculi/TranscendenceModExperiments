@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<!-- Swarm Map 8192x8192 -->
+    <!--debugShowAttributes="true"-->
+	<SystemMap UNID="&ddddMapExperimentSpace;"
+			name=				"Experiment Space"
+			backgroundImage=	""
+			initialScale=		"100"
+			minScale=			"30"
+			maxScale=			"125"
+            lightYearsPerPixel= "25"
+
+			>
+
+
+        <TopologyCreator>
+            <Stargate from="Start:Inbound" to="Start:Outbound" />
+        </TopologyCreator>
+
+		<Node ID="Start" x="-2400" y="-2400">
+			<System UNID=		"&ddddSysPlanetsLab;"
+					name=		"Planet Experiments"
+					level=		"1"
+					attributes=	"safeSpace"
+					/>
+		</Node>
+
+
+	</SystemMap>
+
+</TranscendenceModule>
+ 

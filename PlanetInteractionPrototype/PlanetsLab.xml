@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+	
+	<SystemType UNID="&ddddSysPlanetsLab;" noRandomEncounters="true">
+
+		<SystemGroup>
+            <Group>
+                <Code>
+                    (trnCreateStarAndZones aOrbit (random (list &stStarClassM8; &stStarClassM5; &stStarClassM0;)) {
+                    metallicComp:	'(20 20 10)
+                    organicComp:	'(10 10 20)
+                    rockyComp:		'(65 50 40)
+                    waterComp:		'( 5 20 30)
+                    })
+                </Code>
+
+                <AddAttribute attributes="redDwarfSystem"/>
+
+                <Orbitals count="1" angle="random" BodeDistanceStart="70" BodeDistanceEnd="90">
+                    <Group>
+                        <Station type="&ddddPlanetOne;" name="First" showOrbit="true"/>
+
+                        <Siblings radiusInc="20">
+                            <Marker objName="Start"/>
+                        </Siblings>
+                    </Group>
+                </Orbitals>
+                <Orbitals count="1" angle="random" BodeDistanceStart="90" BodeDistanceEnd="110">
+                    <Group>
+
+                        <Station type="&ddddPlanetTwo;" name="Second" showOrbit="true"/>
+                    </Group>
+                </Orbitals>
+            </Group>
+		</SystemGroup>
+
+
+	</SystemType>
+
+    <StationType UNID="&ddddPlanetOne;"
+                 name=				"rocky planetoid"
+                 attributes=			"generic, inner, lifeZone, outer, planetoid, rocky"
+
+                 scale=				"world"
+                 size=				"4000"
+                 anonymous=			"true"
+
+                 ejectaType=			"&vtStoneAsteroidEjecta;"
+
+                 dockScreen=			"Main"
+    >
+        <Dockscreens
+
+        >
+            <Main backgroundID="&ddddResOrbitSplashOne;">
+                <Panes>
+                  <Default descID="descOrbit">
+                      <Actions>
+                          <Action name="Leave Orbit" cancel="1">
+                              <Exit/>
+                          </Action>
+                      </Actions>
+                  </Default>
+                </Panes>
+            </Main>
+        </Dockscreens>
+        <Language>
+            <Text id="descOrbit">You have achieved a stable orbit.</Text>
+        </Language>
+
+        <ImageLookup imageID="&rsRockyPlanetoidSizeG;"/>
+    </StationType>
+    <StationType UNID="&ddddPlanetTwo;"
+                 name=				"(biosphere terrestrial)"
+                 attributes=			"biosphere, generic, terrestrial"
+
+                 scale=				"world"
+                 size=				"10000"
+                 anonymous=			"true"
+
+                 ejectaType=			"&vtStoneAsteroidEjecta;"
+
+                 dockScreen=			"Main"
+    >
+
+        <Dockscreens
+
+        >
+            <Main backgroundID="&ddddResOrbitSplashTwo;">
+                <Panes>
+                    <Default descID="descOrbit"  >
+                        <Actions>
+                            <Action name="Land" key="L">
+                                (scrShowScreen gScreen &ddddScrPlanetSurface;)
+                            </Action>
+                            <Action name="Leave Orbit" cancel="1">
+                                <Exit/>
+                            </Action>
+                        </Actions>
+                    </Default>
+                </Panes>
+            </Main>
+        </Dockscreens>
+
+        <Language>
+            <Text id="descOrbit">You have achieved a stable orbit.</Text>
+        </Language>
+
+        <ImageVariants>
+            <Image	imageID="&rsBiosphereTerrestrials;" imageX="0"   imageY="0"   imageWidth="230" imageHeight="230"/>
+            <Image	imageID="&rsBiosphereTerrestrials;" imageX="0"   imageY="230" imageWidth="230" imageHeight="230"/>
+            <Image	imageID="&rsBiosphereTerrestrials;" imageX="0"   imageY="460" imageWidth="230" imageHeight="230"/>
+        </ImageVariants>
+    </StationType>
+
+    <DockScreen UNID="&ddddScrPlanetSurface;"
+                nestedScreen=		"true"
+                backgroundID="&ddddResSurfaceSplash;"
+    >
+
+        <Panes>
+            <Default descID="descSurface">
+
+                <Actions>
+                    <Action name="Return to orbit" key="R" cancel="1">
+                        <Exit />
+                    </Action>
+                </Actions>
+            </Default>
+        </Panes>
+        <Language>
+            <Text id="descSurface">You are on the surface of a surprisingly untouched earth-like planet.</Text>
+        </Language>
+    </DockScreen>
+
+    <Image UNID="&ddddResOrbitSplashOne;"    bitmap="Resources\OrbitSplashOne.jpg"	loadOnUse="true"/>
+    <Image UNID="&ddddResOrbitSplashTwo;"    bitmap="Resources\OrbitSplashTwo.jpg"	loadOnUse="true"/>
+    <Image UNID="&ddddResSurfaceSplash;"    bitmap="Resources\SurfaceSplash.jpg"	loadOnUse="true"/>
+	
+</TranscendenceModule>
