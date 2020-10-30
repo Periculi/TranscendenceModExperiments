@@ -1,0 +1,50 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "TXML/TLISP",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+              {
+				"name": "keyword.tlisp.control.txml",
+				"match": "(?i)\\b(if|switch)\\b"
+			  },
+			  {
+				"name": "keyword.tlisp.iterate.txml",
+				"match": "(?i)\\b(for|enum|enumWhile|loop)\\b"
+			  },
+			  {
+				  "name": "keyword.tlisp.block.txml",
+				  "match": "(?i)\\b(block)\\b"
+			  },
+			  {
+				  "name": "keyword.designtype.root.txml",
+				  "match": "(?i)(<TranscendenceAdventure|<TranscendenceModule|<TranscendenceExtension|<TranscendenceLibrary)"
+			  },
+			  {
+				  "name": "keyword.designtype.entity.txml",
+				  "match": "(?i)<!ENTITY.*>"
+			  }
+            ]
+		},
+		"strings": {
+			"name": "string.quoted.double.txml",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.txml",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.txml"
+}

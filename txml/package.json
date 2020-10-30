@@ -1,0 +1,35 @@
+{
+    "name": "txml",
+    "displayName": "Transcendence XML",
+    "description": "Language support for modding transcendence.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.50.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "txml",
+                "aliases": [
+                    "TXML/TLISP",
+                    "txml"
+                ],
+                "extensions": [
+                    ".xml",
+                    ".txml"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "txml",
+                "scopeName": "source.txml",
+                "path": "./syntaxes/txml.tmLanguage.json"
+            }
+        ]
+    }
+}
